@@ -1,98 +1,102 @@
 package com.sam.game.sprites;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
+import com.sam.game.HowlAway;
+import com.sam.game.screens.Play;
 
 import static com.sam.game.Constants.*;
 
-public class PowerUp extends Sprite {
-    private static final int WIDTH = 10; // tentative
-    private static final int HEIGHT = 10; // tentative
+public class PowerUp{
+    protected static final int WIDTH = 80;
+    protected static final int HEIGHT = 80;
+    protected Rectangle bounds;
+    protected boolean alive;
 
-    /*private static final TextureAtlas fullMoonFrames = new TextureAtlas(
-            Gdx.files.internal(""));
-    private static final TextureAtlas hermesFrames = new TextureAtlas(
-            Gdx.files.internal(""));
-    private static final TextureAtlas goldenBonesFrames = new TextureAtlas(
-            Gdx.files.internal(""));
-    private static final TextureAtlas multiplierFrames = new TextureAtlas(
-            Gdx.files.internal(""));
-    private static final TextureAtlas headStartFrames = new TextureAtlas(
-            Gdx.files.internal(""));
-    private static final TextureAtlas wolfPackFrames = new TextureAtlas(
-            Gdx.files.internal(""));
-    private static final TextureAtlas magnetFrames = new TextureAtlas(
-            Gdx.files.internal(""));
-    private static final TextureAtlas bubbleFrames = new TextureAtlas(
-            Gdx.files.internal(""));*/
-
-
-    public static final int FULL_MOON = 0;
-    public static final int HERMES = 1;
-    public static final int GOLDEN_BONES = 2;
-    public static final int MULTIPLIER = 3;
-    public static final int HEAD_START = 4;
-    public static final int WOLF_PACK = 5;
-    public static final int MAGNET = 6;
-    public static final int BUBBLE = 7;
+    public final Texture fullMoon;
+    public final Texture goldenBones;
+    public final Texture hermes;
+    public final Texture magnet;
+    public final Texture multiplier;
+    public final Texture shield;
+    public final Texture wolfpack;
 
     private int type;
 
-    public PowerUp() {
-        super();
-        type = -1;
+    private HowlAway game;
+
+    public PowerUp(HowlAway game) {
+        this.game = game;
+        fullMoon = game.assets.get("powerup_fullmoon.png", Texture.class);
+        goldenBones = game.assets.get("powerup_goldenbones.png", Texture.class);
+        hermes = game.assets.get("powerup_hermes.png", Texture.class);
+        magnet = game.assets.get("powerup_magnet.png", Texture.class);
+        multiplier = game.assets.get("powerup_multiplier.png", Texture.class);
+        shield = game.assets.get("powerup_shield.png", Texture.class);
+        wolfpack = game.assets.get("powerup_wolfpack.png", Texture.class);
+
+        bounds = new Rectangle();
+        alive = false;
+        type = NONE;
     }
 
     public void init(float xPos, float yPos, int type) {
         this.type = type;
-
-        /*if(type == FULL_MOON) {
-            animation = new Animation(0.15f, fullMoonFrames.getRegions());
-        }
-        if(type == HERMES) {
-            animation = new Animation(0.15f, hermesFrames.getRegions());
-        }
-        if(type == GOLDEN_BONES) {
-            animation = new Animation(0.15f, goldenBonesFrames.getRegions());
-        }
-        if(type == MULTIPLIER) {
-            animation = new Animation(0.15f, multiplierFrames.getRegions());
-        }
-        if(type == HEAD_START) {
-            animation = new Animation(0.15f, headStartFrames.getRegions());
-        }
-        if(type == WOLF_PACK) {
-            animation = new Animation(0.15f, wolfPackFrames.getRegions());
-        }
-        if(type == MAGNET) {
-            animation = new Animation(0.15f, magnetFrames.getRegions());
-        }
-        if(type == BUBBLE) {
-            animation = new Animation(0.15f, bubbleFrames.getRegions());
-        }*/
-
         bounds.set(xPos, yPos, WIDTH, HEIGHT);
+        alive = true;
     }
 
-    @Override
     public void update(float delta) {
-        bounds.x -= GROUND_SPEED * delta;
+        bounds.x -= Play.ground_speed * delta;
     }
 
     public int getType() {
         return type;
     }
 
-    public static void dispose() {
-        /*fullMoonFrames.dispose();
-        hermesFrames.dispose();
-        goldenBonesFrames.dispose();
-        multiplierFrames.dispose();
-        headStartFrames.dispose();
-        wolfPackFrames.dispose();
-        magnetFrames.dispose();
-        bubbleFrames.dispose();*/
+    public Texture getTexture() {
+        switch(type) {
+            case FULL_MOON:
+                return fullMoon;
+            case GOLDEN_BONES:
+                return goldenBones;
+            case HERMES:
+                return hermes;
+            case MAGNET:
+                return magnet;
+            case MULTIPLIER:
+                return multiplier;
+            case SHIELD:
+                return shield;
+            case WOLF_PACK:
+                return wolfpack;
+            default:
+                return null;
+        }
+    }
+
+
+    public void dispose() {
+        fullMoon.dispose();
+        goldenBones.dispose();
+        hermes.dispose();
+        magnet.dispose();
+        multiplier.dispose();
+        shield.dispose();
+        wolfpack.dispose();
+    }
+
+    public Rectangle getBounds() {
+        return bounds;
+    }
+
+    public void kill() {
+        this.alive = false;
+    }
+
+    public boolean isAlive() {
+        return alive;
     }
 
 

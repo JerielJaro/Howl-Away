@@ -12,7 +12,7 @@ public class DesktopLauncher {
 		config.width = GAME_WIDTH;
         config.height = GAME_HEIGHT;
         config.title = GAME_TITLE;
-        //config.resizable = false;
+        config.resizable = false;
         new LwjglApplication(new HowlAway(), config);
 	}
 }

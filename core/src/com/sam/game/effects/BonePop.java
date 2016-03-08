@@ -3,6 +3,8 @@ package com.sam.game.effects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.sam.game.HowlAway;
+import com.sam.game.screens.Play;
 
 import static com.sam.game.Constants.*;
 
@@ -10,18 +12,19 @@ public class BonePop extends Effect {
 
     public static final int WIDTH = 64;
     public static final int HEIGHT = 64;
-    private static final TextureAtlas frames = new TextureAtlas(Gdx.files.internal(
-            "bonepopspritesheet/bonepop.atlas"));
-    private static final TextureAtlas goldenFrames = new TextureAtlas(Gdx.files.internal(
-            "goldenbonepopspritesheet/goldenbonepop.atlas"));
-    public BonePop() {
-        super();
+    public final TextureAtlas frames;
+    public final TextureAtlas goldenFrames;
+    public BonePop(HowlAway game) {
+        super(game);
+        frames = game.assets.get("bonepop.atlas", TextureAtlas.class);
+        goldenFrames = game.assets.get("goldenbonepop.atlas", TextureAtlas.class);
     }
 
     @Override
     public void update(float delta) {
+
         elapsedTime += delta;
-        bounds.x -= GROUND_SPEED * delta;
+        bounds.x -= Play.ground_speed * delta;
     }
 
     public void init(float xPos, float yPos, boolean isGolden) {
@@ -35,7 +38,7 @@ public class BonePop extends Effect {
         alive = true;
     }
 
-    public static void dispose() {
+    public void dispose() {
         frames.dispose();
         goldenFrames.dispose();
     }

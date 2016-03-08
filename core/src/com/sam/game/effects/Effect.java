@@ -3,6 +3,7 @@ package com.sam.game.effects;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Rectangle;
+import com.sam.game.HowlAway;
 
 
 public abstract class Effect {
@@ -10,8 +11,9 @@ public abstract class Effect {
     protected Rectangle bounds;
     protected Animation animation;
     protected boolean alive;
-
-    public Effect() {
+    protected HowlAway game;
+    public Effect(HowlAway game) {
+        this.game = game;
         elapsedTime = 0f;
         bounds = new Rectangle();
         alive = false;
@@ -21,14 +23,6 @@ public abstract class Effect {
 
     public Animation getAnimation() {
         return animation;
-    }
-
-    public boolean isAlive() {
-        return alive;
-    }
-
-    public void kill() {
-        alive = false;
     }
 
     public Rectangle getBounds() {
